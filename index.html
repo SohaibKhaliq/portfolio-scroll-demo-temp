@@ -177,7 +177,7 @@ const anim = lottie.loadAnimation({
   renderer: 'svg', loop: false, autoplay: false,
   path: 'https://assets.website-files.com/61d7d46ae501f0a19b213ca5/61d7d46ae501f0526e213cd0_am-mockup2-test5.json'
 });
-const TOTAL = 133;
+const START = 20, TOTAL = 133; // START = first frame with a clearly visible CLOSED laptop (layer 10); frames 0-19 are blank / a tiny tip entering from below
 let lastFrame = -1, animReady = false;
 anim.addEventListener('DOMLoaded', ()=>{ animReady = true; onScroll(); });
 const stage = document.getElementById('stage'),
@@ -192,9 +192,9 @@ function onScroll(){
   const total = stage.offsetHeight - window.innerHeight;
   const p = clamp(-r.top/total, 0, 1);
   const openFrac = ss(0.04, 0.48, p), closeFrac = ss(0.82, 0.97, p);
-  const frame = Math.round(TOTAL * openFrac * (1 - closeFrac));
+  const frame = Math.round(START + (TOTAL - START) * openFrac * (1 - closeFrac));
   if (animReady && frame !== lastFrame) { lastFrame = frame; anim.goToAndStop(frame, true); }
-  const ovOp = ss(95, 125, frame) * (1 - ss(0.80, 0.86, p));
+  const ovOp = ss(55, 100, frame) * (1 - ss(0.80, 0.86, p));
   overlay.style.opacity = ovOp.toFixed(2);
   const cOp = ss(0.50, 0.60, p) * (1 - ss(0.80, 0.86, p));
   const iOp = ss(0.48, 0.58, p) * (1 - ss(0.80, 0.86, p));
