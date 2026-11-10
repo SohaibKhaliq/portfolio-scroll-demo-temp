@@ -18,16 +18,16 @@
   .sticky { position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
     background:radial-gradient(ellipse 900px 340px at 50% 72%, rgba(255,185,29,.07), transparent 70%); }
   .pbar { position:absolute; top:0; left:0; height:3px; background:#FFB91D; width:0%; z-index:5; }
-  .cap { color:#9aa0a6; font-size:14px; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; min-height:20px; text-align:center; }
+  .cap { color:#9aa0a6; font-size:14px; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; min-height:20px; text-align:center; }
   .cap b { color:#FFB91D; font-weight:700; }
   /* Hybrid zone: CSS landing laptop + Lottie share one centred zone */
-  .zone { position:relative; width:min(600px,92vw); aspect-ratio:1196/1380; }
-  .lottie-wrap { position:absolute; inset:0; opacity:0; }
+  .zone { position:relative; width:min(900px, 96vw, calc(118vh - 200px)); aspect-ratio:1000/843; overflow:hidden; }
+  .lottie-wrap { position:absolute; left:0; top:-33%; width:100%; aspect-ratio:1196/1380; opacity:0; }
   #lottie { position:absolute; inset:0; }
   #screenOverlay { position:absolute; overflow:hidden; border-radius:10px; background:#000; opacity:0; }
   #screenOverlay .screen-inner, #screenOverlay img { width:100%; height:100%; display:block; object-fit:cover; object-position:top; }
   /* CSS landing laptop (from the verified v6 demo): flat closed slab that drops in from above */
-  .scene { position:absolute; left:50%; bottom:0; width:min(600px,92vw); transform:translateX(-50%); perspective:1500px; }
+  .scene { position:absolute; left:50%; bottom:0; width:88%; transform:translateX(-50%); perspective:1500px; }
   #cssLap { will-change:transform; transform-style:preserve-3d; }
   .lid-wrap { position:relative; aspect-ratio:16/10; transform-style:preserve-3d; }
   .lid-cover { position:absolute; inset:0; transform-origin:50% 100%; transform:rotateX(55deg); border-radius:14px;
@@ -39,11 +39,11 @@
   .base:after { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:130px; height:7px; background:#0b0d10; border-radius:0 0 10px 10px; }
   .shadow { width:78%; height:34px; margin:22px auto 0;
     background:radial-gradient(ellipse at center, rgba(0,0,0,.85), rgba(255,185,29,.06) 55%, transparent 72%); }
-  .info { margin-top:18px; text-align:center; min-height:92px; }
+  .info { margin-top:12px; text-align:center; min-height:84px; }
   .info .cat { color:#FFB91D; font-size:12px; letter-spacing:3px; font-weight:700; text-transform:uppercase; }
   .info h2 { font-size:29px; font-weight:800; margin-top:8px; }
   .info p { color:#9aa0a6; font-size:15px; margin-top:6px; }
-  .controls { display:flex; align-items:center; gap:18px; margin-top:16px; opacity:0; transition:opacity .4s ease; }
+  .controls { display:flex; align-items:center; gap:18px; margin-top:12px; opacity:0; transition:opacity .4s ease; }
   .controls button { background:transparent; border:1px solid rgba(255,185,29,.55); color:#FFB91D; font-size:14px; font-weight:700; padding:12px 22px; border-radius:40px; cursor:pointer; transition:.25s; font-family:inherit; }
   .controls button:hover { background:#FFB91D; color:#000204; }
   .dots { display:flex; gap:8px; }
@@ -94,6 +94,9 @@
   - Screen rect: overlay % measured from the Lottie's final frame, inset ~1% per side
                  (left 12.3%, top 29.4%, width 75.4%, height 38.2%) so nothing spills
                  past the bezel.
+  - Size: .zone is a CROPPED band of the Lottie comp (aspect 1000/843, wrap top -33%)
+            so the laptop renders ~790px wide on a 1080p screen instead of ~530px;
+            the crop shows comp y ~24-97% = the laptop's full range across all frames.
 -->
 <section id="about">
   <div class="eyebrow">About Trevora Media</div>
