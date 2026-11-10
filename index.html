@@ -240,8 +240,8 @@ function onScroll(){
   shadow.style.opacity = landT.toFixed(2);
   shadow.style.transform = 'scaleX(' + (0.6 + 0.4*landT).toFixed(2) + ')';
   // Lottie: fades in during the handoff, then opens / holds / closes by scroll
-  lottieWrap.style.opacity = (handT * (1 - ss(0.88, 0.96, p))).toFixed(2);
-  const openFrac = ss(0.41, 0.68, p), closeFrac = ss(0.82, 0.97, p);
+  lottieWrap.style.opacity = (handT * (1 - ss(0.86, 0.93, p))).toFixed(2);
+  const openFrac = ss(0.41, 0.68, p), closeFrac = ss(0.80, 0.97, p);
   const frame = Math.round((START + (TOTAL - START) * openFrac) * (1 - closeFrac) + 20 * closeFrac);
   if (animReady && frame !== lastFrame) { lastFrame = frame; anim.goToAndStop(frame, true); }
   const ovOp = ss(55, 100, frame) * (1 - ss(0.80, 0.86, p));
@@ -256,7 +256,7 @@ function onScroll(){
   else if (p < 0.33) cap.innerHTML = 'Ye <b>band laptop</b> hai — scroll karo, khulta hai';
   else if (p < 0.41) cap.innerHTML = 'Laptop <b>MacBook Pro</b> me badal raha hai...';
   else if (p < 0.68) cap.innerHTML = '<b>MacBook Pro khul raha hai</b>...';
-  else if (p < 0.82) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
+  else if (p < 0.80) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
   else if (p < 0.97) cap.innerHTML = '<b>MacBook band ho raha hai</b>...';
   else cap.innerHTML = 'Neeche <b>agla section</b> aa raha hai';
   ticking = false;
