@@ -198,7 +198,7 @@ function show(i){
   if (n === cur || fading) return;
   fading = true; cur = n;
   inner.style.transition = 'opacity .35s ease'; inner.style.opacity = 0;
-  setTimeout(()=>{ render(n); inner.style.opacity = 1; setTimeout(()=>{ fading=false; }, 380); }, 360);
+  setTimeout(()=>{ render(n); inner.style.opacity = 1; onScroll(); setTimeout(()=>{ fading=false; }, 380); }, 360);
 }
 document.getElementById('nextBtn').addEventListener('click', ()=>show(cur+1));
 document.getElementById('prevBtn').addEventListener('click', ()=>show(cur-1));
@@ -240,7 +240,7 @@ function onScroll(){
   shadow.style.opacity = landT.toFixed(2);
   shadow.style.transform = 'scaleX(' + (0.6 + 0.4*landT).toFixed(2) + ')';
   // Lottie: fades in during the handoff, then opens / holds / closes by scroll
-  lottieWrap.style.opacity = handT.toFixed(2);
+  lottieWrap.style.opacity = (handT * (1 - ss(0.88, 0.96, p))).toFixed(2);
   const openFrac = ss(0.41, 0.68, p), closeFrac = ss(0.82, 0.97, p);
   const frame = Math.round((START + (TOTAL - START) * openFrac) * (1 - closeFrac) + 20 * closeFrac);
   if (animReady && frame !== lastFrame) { lastFrame = frame; anim.goToAndStop(frame, true); }
@@ -249,7 +249,7 @@ function onScroll(){
   const cOp = ss(0.66, 0.74, p) * (1 - ss(0.80, 0.86, p));
   const iOp = ss(0.64, 0.72, p) * (1 - ss(0.80, 0.86, p));
   controls.style.opacity = cOp.toFixed(2);
-  controls.style.pointerEvents = cOp > 0.5 ? 'auto' : 'none';
+  controls.style.pointerEvents = cOp > 0.3 ? 'auto' : 'none';
   info.style.opacity = iOp.toFixed(2);
   bar.style.width = (p*100).toFixed(1) + '%';
   if (p < 0.28) cap.innerHTML = 'Upar se <b>band laptop aa raha hai</b>...';
