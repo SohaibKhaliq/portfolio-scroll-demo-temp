@@ -14,7 +14,7 @@
   .lede { color:#9aa0a6; font-size:17px; line-height:1.7; max-width:640px; }
   .hint { margin-top:44px; color:#FFB91D; font-size:14px; letter-spacing:2px; animation:bounce 1.8s infinite; }
   @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
-  #stage { height:520vh; position:relative; }
+  #stage { height:450vh; position:relative; }
   .sticky { position:sticky; top:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;
     background:radial-gradient(ellipse 900px 340px at 50% 72%, rgba(255,185,29,.07), transparent 70%); }
   .pbar { position:absolute; top:0; left:0; height:3px; background:#FFB91D; width:0%; z-index:5; }
@@ -72,6 +72,9 @@
                   the 5 projects come from the shortcode attributes / admin, not hardcoded.
   - Screen rect:  the overlay % below was measured from the Lottie's final frame
                   (display area, "MacBook Pro" label kept visible below it).
+                  Rect was inset a further ~1% per side after the live check showed
+                  the screenshot spilling slightly past the top bezel — current values
+                  are the inset ones (left 12.3%, top 29.4%, width 75.4%, height 38.2%).
                   If the Lottie file changes, re-measure the display area.
 -->
 <section id="about">
@@ -87,7 +90,7 @@
     <div class="cap" id="cap"></div>
     <div class="lottie-wrap">
       <div id="lottie"></div>
-      <div id="screenOverlay" style="left:11.3%;top:28.4%;width:77.4%;height:40.2%;">
+      <div id="screenOverlay" style="left:12.3%;top:29.4%;width:75.4%;height:38.2%;">
         <div class="screen-inner" id="screenInner">
           <img id="screenImg" src="" alt="Project website">
           <div id="phFaceoff" class="screen-ph" style="display:none">
@@ -188,21 +191,21 @@ function onScroll(){
   const r = stage.getBoundingClientRect();
   const total = stage.offsetHeight - window.innerHeight;
   const p = clamp(-r.top/total, 0, 1);
-  const openFrac = ss(0.10, 0.55, p), closeFrac = ss(0.84, 0.99, p);
+  const openFrac = ss(0.04, 0.48, p), closeFrac = ss(0.82, 0.97, p);
   const frame = Math.round(TOTAL * openFrac * (1 - closeFrac));
   if (animReady && frame !== lastFrame) { lastFrame = frame; anim.goToAndStop(frame, true); }
-  const ovOp = ss(0.52, 0.62, p) * (1 - ss(0.82, 0.88, p));
+  const ovOp = ss(95, 125, frame) * (1 - ss(0.80, 0.86, p));
   overlay.style.opacity = ovOp.toFixed(2);
-  const cOp = ss(0.60, 0.70, p) * (1 - ss(0.80, 0.86, p));
-  const iOp = ss(0.58, 0.68, p) * (1 - ss(0.80, 0.86, p));
+  const cOp = ss(0.50, 0.60, p) * (1 - ss(0.80, 0.86, p));
+  const iOp = ss(0.48, 0.58, p) * (1 - ss(0.80, 0.86, p));
   controls.style.opacity = cOp.toFixed(2);
   controls.style.pointerEvents = cOp > 0.5 ? 'auto' : 'none';
   info.style.opacity = iOp.toFixed(2);
   bar.style.width = (p*100).toFixed(1) + '%';
-  if (p < 0.10) cap.innerHTML = 'Neeche scroll karo — <b>MacBook khulne wala hai</b>';
-  else if (p < 0.55) cap.innerHTML = '<b>MacBook Pro khul raha hai</b>...';
-  else if (p < 0.84) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
-  else if (p < 0.99) cap.innerHTML = '<b>MacBook band ho raha hai</b>...';
+  if (p < 0.04) cap.innerHTML = 'Neeche scroll karo — <b>MacBook khulne wala hai</b>';
+  else if (p < 0.48) cap.innerHTML = '<b>MacBook Pro khul raha hai</b>...';
+  else if (p < 0.82) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
+  else if (p < 0.97) cap.innerHTML = '<b>MacBook band ho raha hai</b>...';
   else cap.innerHTML = 'Neeche <b>agla section</b> aa raha hai';
   ticking = false;
 }
