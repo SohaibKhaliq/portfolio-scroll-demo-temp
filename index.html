@@ -75,11 +75,13 @@
   - Landing: plain CSS laptop (verified v6 closed state) drops from above and lands as a
     flat horizontal closed slab — the Lottie asset has no flat closed state (its "closed"
     form is a diagonal wedge), so the landing is CSS.
-  - Handoff: p 0.20-0.32 the CSS laptop crossfades out while the Lottie (frame 20, closed
-    diagonal) crossfades in, same zone, both silver on black.
+  - Handoff: p 0.33-0.41 the CSS laptop crossfades out while the Lottie (frame 50, tilted
+    laptop, keyboard+base visible) crossfades in, same zone, both silver on black.
+    Frames 20-49 (diagonal wedge/triangle) are SKIPPED — they read as a glitch, not a laptop.
   - Opening/showcase/close: FlowRadar "Mockup 2: MacBook Pro" Lottie (am-mockup2-test5.json,
-    134 frames, pre-rendered PNG sequence), scrubbed by scroll; project screenshots in the
-    screen overlay; Next/Previous switch projects; laptop closes, then Services.
+    134 frames, pre-rendered PNG sequence), scrubbed by scroll: opening frames 50->133,
+    showcase at 133, close 133->20; project screenshots in the screen overlay;
+    Next/Previous switch projects; laptop closes, then Services.
   LARAVEL / BOTBLE (Trevora theme):
   - Lottie JSON: public/themes/trevora/assets/lottie/macbook-pro-open.json
                  (demo loads it from the Webflow CDN, CORS *; local copy:
@@ -209,7 +211,7 @@ const anim = lottie.loadAnimation({
   renderer: 'svg', loop: false, autoplay: false,
   path: 'https://assets.website-files.com/61d7d46ae501f0a19b213ca5/61d7d46ae501f0526e213cd0_am-mockup2-test5.json'
 });
-const START = 20, TOTAL = 133; // START = first frame with a clearly visible CLOSED laptop (layer 10)
+const START = 50, TOTAL = 133; // START = first frame that reads as a LAPTOP (layer 25: tilted, keyboard+base visible); frames 20-49 are the diagonal wedge/triangle, skipped
 let lastFrame = -1, animReady = false;
 anim.addEventListener('DOMLoaded', ()=>{ animReady = true; onScroll(); });
 const stage = document.getElementById('stage'),
@@ -230,31 +232,31 @@ function onScroll(){
   const total = stage.offsetHeight - window.innerHeight;
   const p = clamp(-r.top/total, 0, 1);
   // CSS landing laptop: drops from above (bounce), lands flat and closed, holds, then hands off
-  const landT = easeOutBounce(ss(0.00, 0.16, p));
-  const y = (1 - landT) * -45;
-  const handT = ss(0.20, 0.28, p);
+  const landT = easeOutBounce(ss(0.00, 0.28, p));
+  const y = (1 - landT) * -80;
+  const handT = ss(0.33, 0.41, p);
   cssLap.style.transform = 'translateY(' + y.toFixed(1) + 'vh)';
   cssLap.style.opacity = (1 - handT).toFixed(2);
   shadow.style.opacity = landT.toFixed(2);
   shadow.style.transform = 'scaleX(' + (0.6 + 0.4*landT).toFixed(2) + ')';
   // Lottie: fades in during the handoff, then opens / holds / closes by scroll
   lottieWrap.style.opacity = handT.toFixed(2);
-  const openFrac = ss(0.28, 0.60, p), closeFrac = ss(0.80, 0.97, p);
-  const frame = Math.round(START + (TOTAL - START) * openFrac * (1 - closeFrac));
+  const openFrac = ss(0.41, 0.68, p), closeFrac = ss(0.82, 0.97, p);
+  const frame = Math.round((START + (TOTAL - START) * openFrac) * (1 - closeFrac) + 20 * closeFrac);
   if (animReady && frame !== lastFrame) { lastFrame = frame; anim.goToAndStop(frame, true); }
   const ovOp = ss(55, 100, frame) * (1 - ss(0.80, 0.86, p));
   overlay.style.opacity = ovOp.toFixed(2);
-  const cOp = ss(0.62, 0.70, p) * (1 - ss(0.78, 0.84, p));
-  const iOp = ss(0.60, 0.68, p) * (1 - ss(0.78, 0.84, p));
+  const cOp = ss(0.66, 0.74, p) * (1 - ss(0.80, 0.86, p));
+  const iOp = ss(0.64, 0.72, p) * (1 - ss(0.80, 0.86, p));
   controls.style.opacity = cOp.toFixed(2);
   controls.style.pointerEvents = cOp > 0.5 ? 'auto' : 'none';
   info.style.opacity = iOp.toFixed(2);
   bar.style.width = (p*100).toFixed(1) + '%';
-  if (p < 0.16) cap.innerHTML = 'Upar se <b>band laptop aa raha hai</b>...';
-  else if (p < 0.20) cap.innerHTML = 'Ye <b>band laptop</b> hai — scroll karo, khulta hai';
-  else if (p < 0.28) cap.innerHTML = 'Laptop <b>MacBook Pro</b> me badal raha hai...';
-  else if (p < 0.60) cap.innerHTML = '<b>MacBook Pro khul raha hai</b>...';
-  else if (p < 0.80) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
+  if (p < 0.28) cap.innerHTML = 'Upar se <b>band laptop aa raha hai</b>...';
+  else if (p < 0.33) cap.innerHTML = 'Ye <b>band laptop</b> hai — scroll karo, khulta hai';
+  else if (p < 0.41) cap.innerHTML = 'Laptop <b>MacBook Pro</b> me badal raha hai...';
+  else if (p < 0.68) cap.innerHTML = '<b>MacBook Pro khul raha hai</b>...';
+  else if (p < 0.82) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
   else if (p < 0.97) cap.innerHTML = '<b>MacBook band ho raha hai</b>...';
   else cap.innerHTML = 'Neeche <b>agla section</b> aa raha hai';
   ticking = false;
