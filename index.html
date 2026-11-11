@@ -76,8 +76,9 @@
              About/Services sections), wired to the [trevora-portfolio] shortcode so
              the 5 projects come from the shortcode attributes / admin, not hardcoded.
   - Screen rect: overlay % measured from the Lottie's final frame, inset ~1% per side
-                 (left 12.3%, top 29.4%, width 75.4%, height 38.2%) so nothing spills
-                 past the bezel.
+                 (left 11.0%, top 28.0%, width 78.0%, height 39.5%) — fills the display
+                 edge to edge; bottom stops just above the "MacBook Pro" bezel label
+                 so the site never covers it or spills past the bezel.
   - Size: .zone is a CROPPED band of the Lottie comp (aspect 1000/866, wrap top -34%);
           zone is min(1150px, 96vw, (100vh-40px)*1.1547) so the laptop is ~850-900px
           wide on a 1080p screen; info/controls are absolutely positioned over the
@@ -97,7 +98,7 @@
     <div class="zone">
       <div class="lottie-wrap" id="lottieWrap">
         <div id="lottie"></div>
-        <div id="screenOverlay" style="left:12.3%;top:29.4%;width:75.4%;height:38.2%;">
+        <div id="screenOverlay" style="left:11.0%;top:28.0%;width:78.0%;height:39.5%;">
           <div class="screen-inner" id="screenInner">
             <img id="screenImg" src="" alt="Project website">
             <div id="phFaceoff" class="screen-ph" style="display:none">
