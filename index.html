@@ -24,7 +24,7 @@
   .zone { position:relative; width:min(1150px, 96vw, calc((100vh - 40px) * 1.1547)); aspect-ratio:1000/866; overflow:hidden; }
   .lottie-wrap { position:absolute; left:0; top:-34%; width:100%; aspect-ratio:1196/1380; opacity:1; }
   #lottie { position:absolute; inset:0; }
-  #screenOverlay { position:absolute; overflow:hidden; border-radius:10px; background:#000; opacity:0; }
+  #screenOverlay { position:absolute; overflow:hidden; border-radius:0; background:#000; opacity:0; }
   #screenOverlay .screen-inner, #screenOverlay img { width:100%; height:100%; display:block; object-fit:cover; object-position:top; }
   .info { text-align:center; min-height:84px; position:absolute; left:50%; transform:translateX(-50%); bottom:64px; width:min(720px, 92vw); }
   .info .cat { color:#FFB91D; font-size:12px; letter-spacing:3px; font-weight:700; text-transform:uppercase; }
@@ -80,6 +80,9 @@
                  lid's width (edge to edge, bezel covered, silver edge not crossed);
                  bottom stops just above the "MacBook Pro" bezel label. 78.0% overshot
                  the lid by ~15px per side (check #12), so it was pulled back.
+                 border-radius:0 (2026-11-11, owner order) — the old 10px radius rounded
+                 the site's corners and showed black at the corners; square now so the
+                 site fills the display right to its corners.
   - Size: .zone is a CROPPED band of the Lottie comp (aspect 1000/866, wrap top -34%);
           zone is min(1150px, 96vw, (100vh-40px)*1.1547) so the laptop is ~850-900px
           wide on a 1080p screen; info/controls are absolutely positioned over the
