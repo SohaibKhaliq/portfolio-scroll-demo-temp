@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scroll Laptop Showcase — Hybrid (CSS landing + Lottie open) | Trevora Media</title>
+<title>Scroll Laptop Showcase — FlowRadar Mockup 2: MacBook Pro | Trevora Media</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:#000204; color:#fff; font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif; overflow-x:hidden; }
@@ -20,25 +20,12 @@
   .pbar { position:absolute; top:0; left:0; height:3px; background:#FFB91D; width:0%; z-index:5; }
   .cap { color:#9aa0a6; font-size:14px; letter-spacing:2px; text-transform:uppercase; min-height:20px; text-align:center; position:absolute; top:10px; left:0; width:100%; }
   .cap b { color:#FFB91D; font-weight:700; }
-  /* Hybrid zone: CSS landing laptop + Lottie share one centred zone */
+  /* Mockup 2 zone: the Lottie comp, cropped to a band */
   .zone { position:relative; width:min(1150px, 96vw, calc((100vh - 40px) * 1.1547)); aspect-ratio:1000/866; overflow:hidden; }
-  .lottie-wrap { position:absolute; left:0; top:-34%; width:100%; aspect-ratio:1196/1380; opacity:0; }
+  .lottie-wrap { position:absolute; left:0; top:-34%; width:100%; aspect-ratio:1196/1380; opacity:1; }
   #lottie { position:absolute; inset:0; }
   #screenOverlay { position:absolute; overflow:hidden; border-radius:10px; background:#000; opacity:0; }
   #screenOverlay .screen-inner, #screenOverlay img { width:100%; height:100%; display:block; object-fit:cover; object-position:top; }
-  /* CSS landing laptop (from the verified v6 demo): flat closed slab that drops in from above */
-  .scene { position:absolute; left:50%; bottom:0; width:88%; transform:translateX(-50%); perspective:1500px; }
-  #cssLap { will-change:transform; transform-style:preserve-3d; }
-  .lid-wrap { position:relative; aspect-ratio:16/10; transform-style:preserve-3d; }
-  .lid-cover { position:absolute; inset:0; transform-origin:50% 100%; transform:rotateX(55deg); border-radius:14px;
-    background:linear-gradient(160deg,#d8dade,#a9adb4 60%,#8f949b); border:1px solid rgba(255,255,255,.35);
-    display:flex; align-items:center; justify-content:center; }
-  .lid-mark { width:30px; height:30px; border-radius:50%; background:#6a6e75; opacity:.85; box-shadow:inset 0 1px 2px rgba(255,255,255,.5); }
-  .base { height:15px; margin:0; background:linear-gradient(#3a3e46,#14161a); border-radius:5px 5px 16px 16px; position:relative;
-    box-shadow:0 24px 60px rgba(0,0,0,.7); border-top:2px solid rgba(255,185,29,.45); }
-  .base:after { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:130px; height:7px; background:#0b0d10; border-radius:0 0 10px 10px; }
-  .shadow { width:78%; height:34px; margin:22px auto 0;
-    background:radial-gradient(ellipse at center, rgba(0,0,0,.85), rgba(255,185,29,.06) 55%, transparent 72%); }
   .info { text-align:center; min-height:84px; position:absolute; left:50%; transform:translateX(-50%); bottom:64px; width:min(720px, 92vw); }
   .info .cat { color:#FFB91D; font-size:12px; letter-spacing:3px; font-weight:700; text-transform:uppercase; }
   .info h2 { font-size:29px; font-weight:800; margin-top:8px; }
@@ -71,17 +58,12 @@
 </head>
 <body>
 <!--
-  HYBRID — CSS landing laptop + FlowRadar Lottie opening (owner's pick, 2026-11-10).
-  - Landing: plain CSS laptop (verified v6 closed state) drops from above and lands as a
-    flat horizontal closed slab — the Lottie asset has no flat closed state (its "closed"
-    form is a diagonal wedge), so the landing is CSS.
-  - Handoff: p 0.33-0.41 the CSS laptop crossfades out while the Lottie (frame 50, tilted
-    laptop, keyboard+base visible) crossfades in, same zone, both silver on black.
-    Frames 20-49 (diagonal wedge/triangle) are SKIPPED — they read as a glitch, not a laptop.
-  - Opening/showcase/close: FlowRadar "Mockup 2: MacBook Pro" Lottie (am-mockup2-test5.json,
-    134 frames, pre-rendered PNG sequence), scrubbed by scroll: opening frames 50->133,
-    showcase at 133, close 133->20; project screenshots in the screen overlay;
-    Next/Previous switch projects; laptop closes, then Services.
+  FLOWRADAR MOCKUP 2 — "MacBook Pro" (owner's pick, 2026-11-11: "Sirf Mockup 2, bina CSS landing laptop ke").
+  Pure FlowRadar Mockup 2: the Lottie (am-mockup2-test5.json, 134 frames, pre-rendered PNG
+  sequence) is the whole show — no CSS landing laptop. It plays from the first visible
+  closed frame (20) — the closed form IS the diagonal wedge, exactly as FlowRadar's
+  original; opening frames 20->133, showcase at 133, close 133->20; project screenshots
+  in the screen overlay; Next/Previous switch projects; laptop closes, then Services.
   LARAVEL / BOTBLE (Trevora theme):
   - Lottie JSON: public/themes/trevora/assets/lottie/macbook-pro-open.json
                  (demo loads it from the Webflow CDN, CORS *; local copy:
@@ -96,9 +78,10 @@
   - Screen rect: overlay % measured from the Lottie's final frame, inset ~1% per side
                  (left 12.3%, top 29.4%, width 75.4%, height 38.2%) so nothing spills
                  past the bezel.
-  - Size: .zone is a CROPPED band of the Lottie comp (aspect 1000/843, wrap top -33%)
-            so the laptop renders ~790px wide on a 1080p screen instead of ~530px;
-            the crop shows comp y ~24-97% = the laptop's full range across all frames.
+  - Size: .zone is a CROPPED band of the Lottie comp (aspect 1000/866, wrap top -34%);
+          zone is min(1150px, 96vw, (100vh-40px)*1.1547) so the laptop is ~850-900px
+          wide on a 1080p screen; info/controls are absolutely positioned over the
+          zone's black area below the laptop (info bottom 64px, controls bottom 14px).
 -->
 <section id="about">
   <div class="eyebrow">About Trevora Media</div>
@@ -134,15 +117,6 @@
           </div>
         </div>
       </div>
-      <div class="scene">
-        <div id="cssLap">
-          <div class="lid-wrap">
-            <div class="lid-cover"><div class="lid-mark"></div></div>
-          </div>
-          <div class="base"></div>
-          <div class="shadow" id="shadow" style="opacity:0"></div>
-        </div>
-      </div>
     </div>
     <div class="info" id="info" style="opacity:0">
       <div class="cat" id="pCat"></div>
@@ -164,7 +138,7 @@
   <p class="lede">Social media, SEO, paid ads, websites aur custom software — sab kuch ek hi chhat ke neeche.</p>
   <div class="chips"><span>Social Media Marketing</span><span>SEO</span><span>Paid Advertising</span><span>Website Development</span><span>Branding</span><span>AI Video Production</span></div>
 </section>
-<div class="foot">Demo — Hybrid: CSS landing laptop + FlowRadar Mockup 2 MacBook Pro (Lottie) + Trevora projects</div>
+<div class="foot">Demo — FlowRadar Mockup 2: MacBook Pro (Lottie) + Trevora projects</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 <script>
@@ -211,53 +185,37 @@ const anim = lottie.loadAnimation({
   renderer: 'svg', loop: false, autoplay: false,
   path: 'https://assets.website-files.com/61d7d46ae501f0a19b213ca5/61d7d46ae501f0526e213cd0_am-mockup2-test5.json'
 });
-const START = 50, TOTAL = 133; // START = first frame that reads as a LAPTOP (layer 25: tilted, keyboard+base visible); frames 20-49 are the diagonal wedge/triangle, skipped
+const START = 20, TOTAL = 133; // Pure Mockup 2: plays from the first visible closed frame (20); the closed form IS the diagonal wedge, exactly as FlowRadar's original
 let lastFrame = -1, animReady = false;
 anim.addEventListener('DOMLoaded', ()=>{ animReady = true; onScroll(); });
 const stage = document.getElementById('stage'),
   overlay = document.getElementById('screenOverlay'),
-  lottieWrap = document.getElementById('lottieWrap'),
-  cssLap = document.getElementById('cssLap'),
-  shadow = document.getElementById('shadow'),
   controls = document.getElementById('controls'), cap = document.getElementById('cap'),
   bar = document.getElementById('pbar'), info = document.getElementById('info');
 const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
 const ss = (a,b,x)=>{ const t = clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
-function easeOutBounce(x){ const n1=7.5625, d1=2.75;
-  if(x<1/d1){ return n1*x*x; } else if(x<2/d1){ return n1*(x-=1.5/d1)*x+0.75; }
-  else if(x<2.5/d1){ return n1*(x-=2.25/d1)*x+0.9375; } else { return n1*(x-=2.625/d1)*x+0.984375; } }
 let ticking = false;
 function onScroll(){
   const r = stage.getBoundingClientRect();
   const total = stage.offsetHeight - window.innerHeight;
   const p = clamp(-r.top/total, 0, 1);
-  // CSS landing laptop: drops from above (bounce), lands flat and closed, holds, then hands off
-  const landT = easeOutBounce(ss(0.00, 0.28, p));
-  const y = (1 - landT) * -80;
-  const handT = ss(0.33, 0.41, p);
-  cssLap.style.transform = 'translateY(' + y.toFixed(1) + 'vh)';
-  cssLap.style.opacity = (1 - handT).toFixed(2);
-  shadow.style.opacity = landT.toFixed(2);
-  shadow.style.transform = 'scaleX(' + (0.6 + 0.4*landT).toFixed(2) + ')';
-  // Lottie: fades in during the handoff, then opens / holds / closes by scroll
-  lottieWrap.style.opacity = (handT * (1 - ss(0.86, 0.93, p))).toFixed(2);
-  const openFrac = ss(0.41, 0.68, p), closeFrac = ss(0.80, 0.97, p);
+  // Pure Mockup 2: the Lottie is the whole show — visible from p=0 (closed, frame 20),
+  // opens on scroll, showcases, closes back to frame 20, then the stage releases.
+  const openFrac = ss(0.05, 0.55, p), closeFrac = ss(0.75, 0.95, p);
   const frame = Math.round((START + (TOTAL - START) * openFrac) * (1 - closeFrac) + 20 * closeFrac);
   if (animReady && frame !== lastFrame) { lastFrame = frame; anim.goToAndStop(frame, true); }
-  const ovOp = ss(55, 100, frame) * (1 - ss(0.80, 0.86, p));
+  const ovOp = ss(55, 100, frame) * (1 - ss(0.73, 0.80, p));
   overlay.style.opacity = ovOp.toFixed(2);
-  const cOp = ss(0.66, 0.74, p) * (1 - ss(0.80, 0.86, p));
-  const iOp = ss(0.64, 0.72, p) * (1 - ss(0.80, 0.86, p));
+  const cOp = ss(0.50, 0.58, p) * (1 - ss(0.73, 0.80, p));
+  const iOp = ss(0.48, 0.56, p) * (1 - ss(0.73, 0.80, p));
   controls.style.opacity = cOp.toFixed(2);
   controls.style.pointerEvents = cOp > 0.3 ? 'auto' : 'none';
   info.style.opacity = iOp.toFixed(2);
   bar.style.width = (p*100).toFixed(1) + '%';
-  if (p < 0.28) cap.innerHTML = 'Upar se <b>band laptop aa raha hai</b>...';
-  else if (p < 0.33) cap.innerHTML = 'Ye <b>band laptop</b> hai — scroll karo, khulta hai';
-  else if (p < 0.41) cap.innerHTML = 'Laptop <b>MacBook Pro</b> me badal raha hai...';
-  else if (p < 0.68) cap.innerHTML = '<b>MacBook Pro khul raha hai</b>...';
-  else if (p < 0.80) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
-  else if (p < 0.97) cap.innerHTML = '<b>MacBook band ho raha hai</b>...';
+  if (p < 0.05) cap.innerHTML = 'Ye <b>MacBook Pro</b> hai — scroll karo, khulta hai';
+  else if (p < 0.55) cap.innerHTML = '<b>MacBook Pro khul raha hai</b>...';
+  else if (p < 0.75) cap.innerHTML = projects[cur].name + ' — <b>Next / Previous</b> se project badlo';
+  else if (p < 0.95) cap.innerHTML = '<b>MacBook band ho raha hai</b>...';
   else cap.innerHTML = 'Neeche <b>agla section</b> aa raha hai';
   ticking = false;
 }
